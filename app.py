@@ -10,8 +10,8 @@ rcParams.update({'figure.autolayout': True})
 # GITHUB_REFERENCE = "<h5><a href='https://github.com/ChiragSaini/' target='_blank'>Github</a></h5>"
 # LINKED_IN_REFERENCE = "<h5><a href='https://www.linkedin.com/in/chiragsaini97/' target='_blank'>LinkedIn</a></h5>"
 # TWITTER_REFERENCE = "<h5><a href='https://twitter.com/ChiragSaini97' target='_blank'>Twitter</a></h5>"
-SUBHEAD_TITLE = "COVID Dashboard and Vulnerability Analysis"
-SUBHEAD_CREDITS = "Made by Epochalypse Team"
+SUBHEAD_TITLE = "COVID-19 Dashboard and Vulnerability Analysis"
+SUBHEAD_CREDITS = "Made by Epochalypse Team for HackJaipur 2020"
 # c = covid.Covid()
 
 
@@ -72,7 +72,7 @@ st.markdown("<h3> All States Data</h3>", unsafe_allow_html=True)
 st.dataframe(df)
 
 # navigation (sidebar) properties
-st.sidebar.subheader(SUBHEAD_TITLE)
+st.sidebar.title(SUBHEAD_TITLE)
 st.sidebar.subheader(SUBHEAD_CREDITS)
 
 #st.sidebar.markdown(GITHUB_REFERENCE, unsafe_allow_html=True)
