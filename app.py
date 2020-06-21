@@ -4,7 +4,8 @@ import plotly.graph_objects as go
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-import plotly_express as px
+import plotly.express as px
+import numpy as np
 
 rcParams.update({'figure.autolayout': True})
 
@@ -177,7 +178,57 @@ def main():
             st.markdown(get_ui_for_data(data), unsafe_allow_html=True)
 
         st.markdown("<h3> All States Data</h3>", unsafe_allow_html=True)
-        st.write("Raw Data:", df)
+        
+        st.dataframe(df.style.background_gradient(cmap='Blues',subset=["Total"])\
+                        .background_gradient(cmap='Reds',subset=["Active"])\
+                        .background_gradient(cmap='Greens',subset=["Cured"])\
+                        .background_gradient(cmap='Purples',subset=["Death"]))
+        
+        locations = {
+        "Kerala" : [10.8505,76.2711],
+        "Maharashtra" : [19.7515,75.7139],
+        "Karnataka": [15.3173,75.7139],
+        "Telangana": [18.1124,79.0193],
+        "Uttar Pradesh": [26.8467,80.9462],
+        "Rajasthan": [27.0238,74.2179],
+        "Gujarat":[22.2587,71.1924],
+        "Delhi" : [28.7041,77.1025],
+        "Punjab":[31.1471,75.3412],
+        "Tamil Nadu": [11.1271,78.6569],
+        "Haryana": [29.0588,76.0856],
+        "Madhya Pradesh":[22.9734,78.6569],
+        "Jammu and Kashmir":[33.7782,76.5762],
+        "Ladakh": [34.1526,77.5770],
+        "Andhra Pradesh":[15.9129,79.7400],
+        "West Bengal": [22.9868,87.8550],
+        "Bihar": [25.0961,85.3131],
+        "Chhattisgarh":[21.2787,81.8661],
+        "Chandigarh":[30.7333,76.7794],
+        "Uttarakhand":[30.0668,79.0193],
+        "Himachal Pradesh":[31.1048,77.1734],
+        "Goa": [15.2993,74.1240],
+        "Odisha":[20.9517,85.0985],
+        "Andaman and Nicobar Islands": [11.7401,92.6586],
+        "Puducherry":[11.9416,79.8083],
+        "Manipur":[24.6637,93.9063],
+        "Mizoram":[23.1645,92.9376],
+        "Assam":[26.2006,92.9376],
+        "Meghalaya":[25.4670,91.3662],
+        "Tripura":[23.9408,91.9882],
+        "Arunachal Pradesh":[28.2180,94.7278],
+        "Jharkhand" : [23.6102,85.2799],
+        "Nagaland": [26.1584,94.5624],
+        "Sikkim": [27.5330,88.5122],
+        "Dadra and Nagar Haveli":[20.1809,73.0169],
+        "Lakshadweep":[10.5667,72.6417],
+        "Daman and Diu":[20.4283,72.8397]    
+        }
+        map_data = pd.DataFrame.from_dict(locations, orient='index',
+                                columns=['latitude','longitude'])
+        st.map(map_data)
+
+
+
         
 st.sidebar.title(SUBHEAD_TITLE)
 st.sidebar.subheader(SUBHEAD_CREDITS)
