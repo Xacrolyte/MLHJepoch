@@ -121,7 +121,7 @@ def main():
 
         # Select variable to be plotted
         cols = ['Total Confirmed Deaths', 'Deaths per Day','Daily Percentage Change']
-        variable = st.selectbox('Select variable to display', cols)
+        variable = st.selectbox('Select Statistic to be displayed:', cols)
 
         if variable == 'Total Confirmed Deaths':
             fig=global_plot_create(data = data_plot, 
