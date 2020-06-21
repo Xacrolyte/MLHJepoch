@@ -11,7 +11,7 @@ import seaborn as sns
 
 rcParams.update({'figure.autolayout': True})
 
-SUBHEAD_TITLE = "COVID-19 Dashboard and Vulnerability Analysis"
+SUBHEAD_TITLE = "EpiSight"
 SUBHEAD_CREDITS = "Made by Epochalypse Team for HackJaipur 2020"
 
 def get_ui_for_data(data_input):
@@ -85,7 +85,7 @@ def main():
     page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Global' ,'INDIA', 'Global Map Visualization'])
 
     if page == 'Homepage':
-        st.title("COVID-19 Dashboard")
+        st.title("EpiSight")
         st.header("Exploration of COVID-19 related deaths around the world")
         st.subheader("Use the Selection Panel on the left sidebar, to navigate to respective features available.")
         st.markdown("This is a Covid-19 Dashboard, made purely using Python and Streamlit. Streamlit makes it super easy to make any sort of Python apps like Machine Learning and Data Science Apps.")
