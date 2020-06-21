@@ -84,7 +84,7 @@ def load_data_and_return_dataframe():
 
 df = load_data_and_return_dataframe()
 def main():
-    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Guidelines', 'Global' ,'INDIA', 'Global Map Visualization'])
+    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Guidelines', 'Statistics-Global' ,'Statistics-India', 'Map Visualization'])
 
     if page == 'Homepage':
         st.title("EpiSight")
@@ -111,7 +111,7 @@ def main():
         elif(lang=='తెలుగు'):
             st.markdown(german())
         
-    elif page == 'Global':
+    elif page == 'Statistics-Global':
         global_data = load_global_death_data()
         global_data = date_convert(global_data)
         global_deaths = tidy_death_data(global_data, group = 'Country/Region')
@@ -157,7 +157,7 @@ def main():
                         yaxis = 'Change in percentage')
             st.plotly_chart(fig)
 
-    elif page == 'INDIA':
+    elif page == 'Statistics-India':
         st.title("COVID19 India DashBoard")
         st.header("COVID19 Dashboard made using Python and Streamlit")
         st.subheader("Check any State Status")
@@ -232,10 +232,10 @@ def main():
                                 columns=['latitude','longitude'])
         st.map(map_data)
 
-    elif page == 'Global Map Visualization':
-        st.title("Global Map Live Visualization")
+    elif page == 'Map Visualization':
+        st.title("Live Map Visualization")
         st.header("Please drag the pointer over the map to scroll. Hover over a region for related info:")
-        st.header("Scroll-Down for Zoom-Out; Scroll-Up for Zoom-In")
+        st.write("Scroll for Zoom")
 
         today = date.today()
         yesterday = today - timedelta(days=1)
