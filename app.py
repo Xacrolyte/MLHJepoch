@@ -234,7 +234,15 @@ def main():
         fig.update_layout(mapbox_style="open-street-map")
         fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
         st.plotly_chart(fig)
-        
+
+hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)        
+
 st.sidebar.title(SUBHEAD_TITLE)
 st.sidebar.subheader(SUBHEAD_CREDITS)
 if __name__ == '__main__':
