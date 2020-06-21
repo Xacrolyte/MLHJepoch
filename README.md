@@ -1,6 +1,6 @@
 # MLH HackJaipur Project - Team Epochalypse
 
-![Web_App_Image](https://github.com/xacrolyte/MLHJepoch/blob/master/MLH_app.png?raw=true)
+![Web_App_Image](https://github.com/xacrolyte/MLHJepoch/blob/master/episight_ss.png?raw=true)
 
 * This repository is a project for the MLH HackJaipur Hackathon 2020.
 
