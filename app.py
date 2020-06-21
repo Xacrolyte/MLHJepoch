@@ -186,7 +186,7 @@ def main():
         st.write("Raw Data:", df)
 
     elif page == 'Map Visualization':
-        st.title("Global Map Visualization")
+        st.title("Global Map Live Visualization")
         st.header("Please drag the pointer over the map to scroll. Hover over a region for related info:")
         st.header("Scroll-Down for Zoom-Out; Scroll-Up for Zoom-In")
         from datetime import date, timedelta
