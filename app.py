@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup
 import seaborn as sns
 from lang import *
 from datetime import date, timedelta
+import json
+from pandas.io.json import json_normalize
 
 rcParams.update({'figure.autolayout': True})
 
@@ -84,7 +86,7 @@ def load_data_and_return_dataframe():
 
 df = load_data_and_return_dataframe()
 def main():
-    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Guidelines', 'Statistics-Global' ,'Statistics-India', 'Map Visualization'])
+    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Guidelines', 'Statistics-Global' ,'Statistics-India', 'Hospitals-India', 'Map Visualization'])
 
     if page == 'Homepage':
         st.title("EpiSight")
@@ -251,6 +253,29 @@ def main():
         fig.update_layout(mapbox_style="open-street-map")
         fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
         st.plotly_chart(fig)
+
+    elif page == 'Hospitals-India':
+        st.title("Hospitals-India Map Visualization")
+        st.header("Please drag the pointer over the map to scroll. Hover over a region for related info:")
+        st.write("Scroll for Zoom")
+
+        dfh='https://api.rootnet.in/covid19-in/stats/hospitals'
+        client=requests.get(dfh)
+
+        data=client.content
+        data=json.loads(data)
+
+
+        st.write("Total Number of Hospitals = ",data['data']['summary']['totalHospitals'])
+        st.write("Total Number of Beds = ", data['data']['summary']['totalBeds'])
+        st.write("Number of urban Hospitals = ", data['data']['summary']['urbanHospitals'])
+        st.write("Number of rural Hospitals = ", data['data']['summary']['ruralHospitals'])
+
+        dfh=json_normalize(data['data']['regional'])
+        choice = st.selectbox(label="Select State", options=dfh["state"])
+        value=dfh.loc[dfh["state"]==choice]
+        st.table(value)
+        st.write("Raw Data: ", dfh)
 
 hide_streamlit_style = """
             <style>
