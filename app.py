@@ -43,38 +43,50 @@ def load_data_and_return_dataframe():
     return pd.DataFrame(data, columns=["State", "Total", "Active", "Cured", "Death"])
 
 df = load_data_and_return_dataframe()
-st.title("COVID19 India DashBoard")
-st.header("COVID19 Dashboard made using Python and Streamlit")
-st.subheader("Check any State Status")
-sel_state = st.multiselect(label="Select State", options=df["State"])
-if sel_state:
-    states = []
-    for c in sel_state:
-        states.append(df[df["State"] == c].values)
-    for arr in states:
-        data = arr[0]
-        st.markdown(get_ui_for_data(data), unsafe_allow_html=True)
+def main():
+    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'INDIA', 'Another One', 'Another One'])
 
-st.markdown("<h2>Top 10 States affected</h2>", unsafe_allow_html=True)
-top_10 = df.nlargest(10, ["Total"])
-fig = go.Figure(data = [
-    go.Bar(name="Total", x=top_10["State"], y=top_10["Total"]),
-    go.Bar(name="Active", x=top_10["State"], y=top_10["Active"]),
-    go.Bar(name="Cured", x=top_10["State"], y=top_10["Cured"]),
-    go.Bar(name="Deaths", x=top_10["State"], y=top_10["Death"])
-])
-st.plotly_chart(fig, use_container_width=True)
+    if page == 'Homepage':
+        # Set title and subheader for dashboard
+        st.title("COVID-19 Dashboard")
+        st.header("Exploration of COVID-19 Deaths")
+        st.subheader("Use the selection panel on the left.")
 
-for data in df.nlargest(10, ["Total"]).values:
-    st.markdown(get_ui_for_data(data), unsafe_allow_html=True)
+    elif page == 'INDIA':
 
-st.markdown("<h3> All States Data</h3>", unsafe_allow_html=True)
-st.dataframe(df)
+        st.title("COVID19 India DashBoard")
+        st.header("COVID19 Dashboard made using Python and Streamlit")
+        st.subheader("Check any State Status")
+        sel_state = st.multiselect(label="Select State", options=df["State"])
+        if sel_state:
+            states = []
+            for c in sel_state:
+                states.append(df[df["State"] == c].values)
+            for arr in states:
+                data = arr[0]
+                st.markdown(get_ui_for_data(data), unsafe_allow_html=True)
+
+        st.markdown("<h2>Top 10 States affected</h2>", unsafe_allow_html=True)
+        top_10 = df.nlargest(10, ["Total"])
+        fig = go.Figure(data = [
+            go.Bar(name="Total", x=top_10["State"], y=top_10["Total"]),
+            go.Bar(name="Active", x=top_10["State"], y=top_10["Active"]),
+            go.Bar(name="Cured", x=top_10["State"], y=top_10["Cured"]),
+            go.Bar(name="Deaths", x=top_10["State"], y=top_10["Death"])
+        ])
+        st.plotly_chart(fig, use_container_width=True)
+
+        for data in df.nlargest(10, ["Total"]).values:
+            st.markdown(get_ui_for_data(data), unsafe_allow_html=True)
+
+        st.markdown("<h3> All States Data</h3>", unsafe_allow_html=True)
+        st.dataframe(df)
 
 # navigation (sidebar) properties
 st.sidebar.title(SUBHEAD_TITLE)
 st.sidebar.subheader(SUBHEAD_CREDITS)
-
+if __name__ == '__main__':
+    main()
 #st.sidebar.markdown(GITHUB_REFERENCE, unsafe_allow_html=True)
 #st.sidebar.markdown(LINKED_IN_REFERENCE, unsafe_allow_html=True)
 #st.sidebar.markdown(TWITTER_REFERENCE, unsafe_allow_html=True)
