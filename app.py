@@ -30,20 +30,14 @@ def get_ui_for_data(data_input):
 
 @st.cache
 def load_global_death_data():
-    # Pull data from Johns Hopkins source
    data = pd.read_csv('https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv', error_bad_lines=False)
-   # Drop columns province/state, geographic coordinates
    data.drop(['Province/State', 'Lat', 'Long'], axis=1, inplace=True)
-   # Groupby country
    data = data.groupby(['Country/Region']).sum()
    return data
 
 def date_convert(df):
-    # transpose the frame
     df_tran = df.transpose().reset_index()
-    # Next rename the column 
     df_tran.rename({'index': 'Date'}, axis=1, inplace=True)
-    # Convert the date column to datetime
     df_tran['Date'] =  pd.to_datetime(df_tran['Date'])
     return df_tran
 
@@ -51,16 +45,10 @@ def tidy_death_data(df,group):
     df_tidy = pd.melt(df, id_vars=['Date'])
     df_tidy.drop(df_tidy[df_tidy['value'] < 10].index, inplace=True) # Drop all dates and countries with less than 10 recorded deaths
     df_tidy = df_tidy.assign(Days=df_tidy.groupby(group).Date.apply(lambda x: x - x.iloc[0]).dt.days) # Calculate # of days since 10th death by country
-    # calculate daily change in deaths (raw)
     df_tidy['daily_change'] = df_tidy.sort_values([group,'Days']).groupby(group)['value'].diff()
-    # calculate daily change in deaths (%)
     df_tidy['daily_pct_change'] = df_tidy.sort_values([group,'Days']).groupby(group)['value'].pct_change() * 100
-    # calculate 7-day rolling average in deaths (raw)
     df_tidy['daily_roll_avg'] = df_tidy.groupby(group)['daily_change'].rolling(7).mean().round().reset_index(0,drop= True)
-    # calculate 7-day rolling average in deaths (%)
     df_tidy['daily_pctchange_roll_avg'] = df_tidy.groupby(group)['daily_pct_change'].rolling(7).mean().round().reset_index(0,drop= True)
-
-    # Replace the first day (NaN) as zero and missing rolling averages with the value that day
     df_tidy['daily_change'].fillna(0, inplace=True)
     df_tidy['daily_pct_change'].fillna(0, inplace=True)
     df_tidy['daily_roll_avg'].fillna(df_tidy['daily_change'], inplace=True)
@@ -114,18 +102,13 @@ def main():
         st.header('Daily COVID-19 deaths, sorted by country, from Jan 22, 2020 - Present.')
         st.write("Raw Data:", global_data)
 
-        # Create a list to pick the countries we want to look at
-        # list uses the column names (the countries) of our original data
         cols = list(global_data[global_data.columns.difference(['Date'])])
         countries = st.multiselect('Select countries to display', cols, ["US", "India", "China"])
 
-        # Set index in order to use loc operation
         global_deaths.set_index('Country/Region', inplace=True)
-        # Limit the data to the countries selected above. 
         data_plot = global_deaths.loc[countries] 
         data_plot.reset_index(inplace=True)
 
-        # Select variable to be plotted
         cols = ['Total Confirmed Deaths', 'Deaths per Day','Daily Percentage Change']
         variable = st.selectbox('Select Statistic to be displayed:', cols)
 
@@ -183,6 +166,53 @@ def main():
             st.markdown(get_ui_for_data(data), unsafe_allow_html=True)
 
         st.markdown("<h3> All States Data</h3>", unsafe_allow_html=True)
+        st.dataframe(df.style.background_gradient(cmap='Blues',subset=["Total"])\
+                        .background_gradient(cmap='Reds',subset=["Active"])\
+                        .background_gradient(cmap='Greens',subset=["Cured"])\
+                        .background_gradient(cmap='Purples',subset=["Death"]))
+
+        locations = {
+        "Kerala" : [10.8505,76.2711],
+        "Maharashtra" : [19.7515,75.7139],
+        "Karnataka": [15.3173,75.7139],
+        "Telangana": [18.1124,79.0193],
+        "Uttar Pradesh": [26.8467,80.9462],
+        "Rajasthan": [27.0238,74.2179],
+        "Gujarat":[22.2587,71.1924],
+        "Delhi" : [28.7041,77.1025],
+        "Punjab":[31.1471,75.3412],
+        "Tamil Nadu": [11.1271,78.6569],
+        "Haryana": [29.0588,76.0856],
+        "Madhya Pradesh":[22.9734,78.6569],
+        "Jammu and Kashmir":[33.7782,76.5762],
+        "Ladakh": [34.1526,77.5770],
+        "Andhra Pradesh":[15.9129,79.7400],
+        "West Bengal": [22.9868,87.8550],
+        "Bihar": [25.0961,85.3131],
+        "Chhattisgarh":[21.2787,81.8661],
+        "Chandigarh":[30.7333,76.7794],
+        "Uttarakhand":[30.0668,79.0193],
+        "Himachal Pradesh":[31.1048,77.1734],
+        "Goa": [15.2993,74.1240],
+        "Odisha":[20.9517,85.0985],
+        "Andaman and Nicobar Islands": [11.7401,92.6586],
+        "Puducherry":[11.9416,79.8083],
+        "Manipur":[24.6637,93.9063],
+        "Mizoram":[23.1645,92.9376],
+        "Assam":[26.2006,92.9376],
+        "Meghalaya":[25.4670,91.3662],
+        "Tripura":[23.9408,91.9882],
+        "Arunachal Pradesh":[28.2180,94.7278],
+        "Jharkhand" : [23.6102,85.2799],
+        "Nagaland": [26.1584,94.5624],
+        "Sikkim": [27.5330,88.5122],
+        "Dadra and Nagar Haveli":[20.1809,73.0169],
+        "Lakshadweep":[10.5667,72.6417],
+        "Daman and Diu":[20.4283,72.8397]    
+        }
+        map_data = pd.DataFrame.from_dict(locations, orient='index',
+                                columns=['latitude','longitude'])
+        st.map(map_data)
         st.write("Raw Data:", df)
 
     elif page == ' Global Map Visualization':
@@ -195,11 +225,9 @@ def main():
         yesterday = today - timedelta(days=1)
 
         d1 = yesterday.strftime("%m-%d-%Y")
-        print("Yesterdays Date: ", d1)
         file_url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/' + d1 + '.csv'
-        df = pd.read_csv(file_url)
-        print(df)
-        data = df[['Confirmed','Lat','Long_','Country_Region','Recovered','Deaths']]
+        dfg = pd.read_csv(file_url)
+        data = dfg[['Confirmed','Lat','Long_','Country_Region','Recovered','Deaths']]
         data.rename( columns={'Lat':'lat','Long_':'lon'},inplace = True)
         data = data.dropna()
         fig = px.scatter_mapbox(data,lat="lat", lon="lon", hover_name="Country_Region", hover_data=["Confirmed",'Recovered','Deaths'],
