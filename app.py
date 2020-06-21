@@ -96,20 +96,22 @@ def main():
     if page == 'Homepage':
         st.title("COVID-19 Dashboard")
         st.header("Exploration of COVID-19 Deaths")
-        st.subheader("Use the selection panel on the left.")
+        st.subheader("Use the Selection Panel on the left sidebar, to navigate to respective features available.")
+        st.write("This is a minimal Covid-19 Dashboard, made purely using Python and Streamlit. Streamlit makes it super easy to make any sort of Python apps like Machine Learning and Data Science Apps.")
+        st.write("We have explored the Indian as well Global representation of Covid-related statistics and the effects of the pandemic since January 2020.")
     elif page == 'Global':
         global_data = load_global_death_data()
         global_data = date_convert(global_data)
         global_deaths = tidy_death_data(global_data, group = 'Country/Region')
 
         st.title('Global COVID-19 Deaths')
-        st.header('Daily COVID-19 deaths by country from Jan 22, 2020 - Present.')
+        st.header('Daily COVID-19 deaths, sorted by country, from Jan 22, 2020 - Present.')
         st.write("Raw Data:", global_data)
 
         # Create a list to pick the countries we want to look at
         # list uses the column names (the countries) of our original data
         cols = list(global_data[global_data.columns.difference(['Date'])])
-        countries = st.multiselect('Select countries display', cols, ["US", "India", "China"])
+        countries = st.multiselect('Select countries to display', cols, ["US", "India", "China"])
 
         # Set index in order to use loc operation
         global_deaths.set_index('Country/Region', inplace=True)
@@ -117,7 +119,7 @@ def main():
         data_plot = global_deaths.loc[countries] 
         data_plot.reset_index(inplace=True)
 
-        # Select the variable to be plotted
+        # Select variable to be plotted
         cols = ['Total Confirmed Deaths', 'Deaths per Day','Daily Percentage Change']
         variable = st.selectbox('Select variable to display', cols)
 
