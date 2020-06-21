@@ -104,14 +104,12 @@ def main():
         
         if(lang=='English'):
            st.markdown(english())
-        elif(lang=='தமிழ்'):
-            st.markdown(tamil())
+        elif(lang=='Française'):
+            st.markdown(french())
         elif(lang=='हिंदी'):
             st.markdown(hindi())
-        elif(lang=='ગુજરાતી'):
+        elif(lang=='Deutsche'):
             st.markdown(french())
-        elif(lang=='తెలుగు'):
-            st.markdown(german())
         
     elif page == 'Statistics-Global':
         global_data = load_global_death_data()
