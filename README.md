@@ -22,6 +22,10 @@
 
 * **Pandas**: A software library written for the Python programming language for data manipulation and analysis. In particular, it offers data structures and operations for manipulating numerical tables and time series.
 
+* **BeautifulSoup**: Beautiful Soup is a library that makes it easy to scrape information from web pages. It sits atop an HTML or XML parser, providing Pythonic idioms for iterating, searching, and modifying the parse tree.
+
+* **Requests**: Requests was used to send HTTP/1.1 requests extremely easily. There’s no need to manually add query strings.
+
 ## Deploying
 
 * App can be tested live on **Heroku App**.
