@@ -95,10 +95,13 @@ def main():
 
     if page == 'Homepage':
         st.title("COVID-19 Dashboard")
-        st.header("Exploration of COVID-19 Deaths")
+        st.header("Exploration of COVID-19 related deaths around the world")
         st.subheader("Use the Selection Panel on the left sidebar, to navigate to respective features available.")
-        st.write("This is a minimal Covid-19 Dashboard, made purely using Python and Streamlit. Streamlit makes it super easy to make any sort of Python apps like Machine Learning and Data Science Apps.")
+        st.markdown("This is a Covid-19 Dashboard, made purely using Python and Streamlit. Streamlit makes it super easy to make any sort of Python apps like Machine Learning and Data Science Apps.")
         st.write("We have explored the Indian as well Global representation of Covid-related statistics and the effects of the pandemic since January 2020.")
+        st.subheader("Contributing:")
+        st.markdown("The project is Open-Sourced on [GitHub](https://github.com/Xacrolyte/MLHJepoch), under the MIT Licence. Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please make sure to update tests as appropriate.")
+
     elif page == 'Global':
         global_data = load_global_death_data()
         global_data = date_convert(global_data)
