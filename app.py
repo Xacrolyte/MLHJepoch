@@ -213,7 +213,6 @@ def main():
         map_data = pd.DataFrame.from_dict(locations, orient='index',
                                 columns=['latitude','longitude'])
         st.map(map_data)
-        st.write("Raw Data:", df)
 
     elif page == 'Global Map Visualization':
         st.title("Global Map Live Visualization")
