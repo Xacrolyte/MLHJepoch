@@ -94,7 +94,7 @@ def load_data_and_return_dataframe():
 
 df = load_data_and_return_dataframe()
 def main():
-    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Global' ,'INDIA', 'Map Visualization'])
+    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Global' ,'INDIA', 'Global Map Visualization'])
 
     if page == 'Homepage':
         st.title("COVID-19 Dashboard")
@@ -185,7 +185,7 @@ def main():
         st.markdown("<h3> All States Data</h3>", unsafe_allow_html=True)
         st.write("Raw Data:", df)
 
-    elif page == 'Map Visualization':
+    elif page == ' Global Map Visualization':
         st.title("Global Map Live Visualization")
         st.header("Please drag the pointer over the map to scroll. Hover over a region for related info:")
         st.header("Scroll-Down for Zoom-Out; Scroll-Up for Zoom-In")
