@@ -215,7 +215,7 @@ def main():
         st.map(map_data)
         st.write("Raw Data:", df)
 
-    elif page == ' Global Map Visualization':
+    elif page == 'Global Map Visualization':
         st.title("Global Map Live Visualization")
         st.header("Please drag the pointer over the map to scroll. Hover over a region for related info:")
         st.header("Scroll-Down for Zoom-Out; Scroll-Up for Zoom-In")
