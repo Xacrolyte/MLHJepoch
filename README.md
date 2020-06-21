@@ -1,4 +1,4 @@
-# MLH HackJaipur Project - Team Epochalypse
+# MLH HackJaipur Project - Team Epochalypse - EpiSight
 
 ![Web_App_Image](https://github.com/xacrolyte/MLHJepoch/blob/master/episight_ss.png?raw=true)
 
