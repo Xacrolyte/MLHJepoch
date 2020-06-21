@@ -8,6 +8,8 @@ import plotly_express as px
 import requests
 from bs4 import BeautifulSoup
 import seaborn as sns
+from lang import *
+from datetime import date, timedelta
 
 rcParams.update({'figure.autolayout': True})
 
@@ -82,7 +84,7 @@ def load_data_and_return_dataframe():
 
 df = load_data_and_return_dataframe()
 def main():
-    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Global' ,'INDIA', 'Global Map Visualization'])
+    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Guidelines', 'Global' ,'INDIA', 'Global Map Visualization'])
 
     if page == 'Homepage':
         st.title("EpiSight")
@@ -93,6 +95,22 @@ def main():
         st.subheader("Contributing:")
         st.markdown("The project is Open-Sourced on [GitHub](https://github.com/Xacrolyte/MLHJepoch), under the MIT Licence. Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please make sure to update tests as appropriate.")
 
+    elif page =='Guidelines':
+        langugaes=['English','हिंदी','Française','Deutsche']
+        lang=st.selectbox('Choose Language',langugaes)
+        st.subheader('WHO Guidelines')
+        
+        if(lang=='English'):
+           st.markdown(english())
+        elif(lang=='தமிழ்'):
+            st.markdown(tamil())
+        elif(lang=='हिंदी'):
+            st.markdown(hindi())
+        elif(lang=='ગુજરાતી'):
+            st.markdown(french())
+        elif(lang=='తెలుగు'):
+            st.markdown(german())
+        
     elif page == 'Global':
         global_data = load_global_death_data()
         global_data = date_convert(global_data)
@@ -218,7 +236,6 @@ def main():
         st.title("Global Map Live Visualization")
         st.header("Please drag the pointer over the map to scroll. Hover over a region for related info:")
         st.header("Scroll-Down for Zoom-Out; Scroll-Up for Zoom-In")
-        from datetime import date, timedelta
 
         today = date.today()
         yesterday = today - timedelta(days=1)
