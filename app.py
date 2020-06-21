@@ -132,6 +132,24 @@ def main():
                         yaxis = 'Confirmed Deaths')
             st.plotly_chart(fig)
 
+        elif variable == 'Deaths per Day':
+            fig=global_plot_create(data = data_plot, 
+                        x = 'Days',
+                        y = 'daily_roll_avg',
+                        title = 'Average death rate worldwide',
+                        xaxis = 'Number of days',
+                        yaxis = 'Average Deaths')
+            st.plotly_chart(fig)
+
+        elif variable == 'Daily Percentage Change':
+            fig=global_plot_create(data = data_plot, 
+                        x = 'Days',
+                        y = 'daily_pctchange_roll_avg',
+                        title = 'Daily percentage change globally',
+                        xaxis = 'Number of days',
+                        yaxis = 'Change in percentage')
+            st.plotly_chart(fig)
+
     elif page == 'INDIA':
         st.title("COVID19 India DashBoard")
         st.header("COVID19 Dashboard made using Python and Streamlit")
