@@ -5,6 +5,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 import plotly_express as px
+import requests
+from bs4 import BeautifulSoup
+import seaborn as sns
 
 rcParams.update({'figure.autolayout': True})
 
@@ -91,7 +94,7 @@ def load_data_and_return_dataframe():
 
 df = load_data_and_return_dataframe()
 def main():
-    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Global' ,'INDIA', 'Another One'])
+    page = st.sidebar.selectbox("Choose a feature", ['Homepage', 'Global' ,'INDIA', 'Map Visualization'])
 
     if page == 'Homepage':
         st.title("COVID-19 Dashboard")
@@ -181,6 +184,29 @@ def main():
 
         st.markdown("<h3> All States Data</h3>", unsafe_allow_html=True)
         st.write("Raw Data:", df)
+
+    elif page == 'Map Visualization':
+        st.title("Global Map Visualization")
+        st.header("Please drag the pointer over the map to scroll. Hover over a region for related info:")
+        st.header("Scroll-Down for Zoom-Out; Scroll-Up for Zoom-In")
+        from datetime import date, timedelta
+
+        today = date.today()
+        yesterday = today - timedelta(days=1)
+
+        d1 = yesterday.strftime("%m-%d-%Y")
+        print("Yesterdays Date: ", d1)
+        file_url = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/' + d1 + '.csv'
+        df = pd.read_csv(file_url)
+        print(df)
+        data = df[['Confirmed','Lat','Long_','Country_Region','Recovered','Deaths']]
+        data.rename( columns={'Lat':'lat','Long_':'lon'},inplace = True)
+        data = data.dropna()
+        fig = px.scatter_mapbox(data,lat="lat", lon="lon", hover_name="Country_Region", hover_data=["Confirmed",'Recovered','Deaths'],
+                                color_discrete_sequence=["firebrick"], zoom=3, height=300)
+        fig.update_layout(mapbox_style="open-street-map")
+        fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+        st.plotly_chart(fig)
         
 st.sidebar.title(SUBHEAD_TITLE)
 st.sidebar.subheader(SUBHEAD_CREDITS)
