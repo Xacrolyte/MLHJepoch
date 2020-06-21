@@ -28,7 +28,7 @@
 
 ## Deploying
 
-* App can be tested live on **Heroku App**.
+* App can be tested live on **Heroku App** by clicking [here](https://mlhjepoch.herokuapp.com/).
 
 ## Contributions
 
