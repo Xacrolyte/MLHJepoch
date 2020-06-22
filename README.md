@@ -30,6 +30,12 @@
 
 * App can be tested live on **Heroku App** by clicking [here](https://mlhjepoch.herokuapp.com/).
 
+## Future Development
+
+* The very first step is to enable labguage control over the whole site.
+* Need a map tally to track the number of hospitals and beds in a particular location
+* Create a Contact Us page.
+
 ## Contributions
 
 * The project is Open-Sourced on [GitHub](https://github.com/Xacrolyte/MLHJepoch), under the MIT Licence. Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please make sure to update tests as appropriate.
