@@ -32,7 +32,7 @@
 
 ## Future Development
 
-* The very first step is to enable labguage control over the whole site.
+* The very first step is to enable language control over the whole site.
 * Need a map tally to track the number of hospitals and beds in a particular location
 * Create a Contact Us page.
 
